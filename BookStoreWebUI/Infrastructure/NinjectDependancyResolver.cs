@@ -1,4 +1,5 @@
 ﻿using BookStoreDomain.Abstract;
+using BookStoreDomain.Concrete;
 using BookStoreDomain.Entities;
 using Moq;
 using Ninject;
@@ -29,14 +30,16 @@ namespace BookStoreWebUI.Infrastructure
         }
         private void AddBindings()
         {
-            Mock<IBookRepository> mock= new Mock<IBookRepository>();
-            mock.Setup(b => b.Books).Returns(
-                new List<Book> {
-                new Book {Title="SQL",Author="Frank" },
-                new Book { Title="ASP.NET",Author="Sam"},
-                new Book {Title="C#",Author="Hani" } }
-                );
-            kernel.Bind<IBookRepository>().ToConstant(mock.Object);
+            //Mock<IBookRepository> mock= new Mock<IBookRepository>();
+            //mock.Setup(b => b.Books).Returns(
+            //    new List<Book> {
+            //    new Book {Title="SQL",Author="Frank",Description="asw",Price=212 },
+            //    new Book { Title="ASP.NET",Author="Sam",Description="asw2",Price=433},
+            //    new Book {Title="C#",Author="Hani",Description="asw3",Price=23 } }
+            //    );
+            kernel.Bind<IBookRepository>().To<EFBookRepository>();
+           // kernel.Bind<IBookRepository>().ToConstant(mock);
+
             // throw new NotImplementedException();
         }
     }
