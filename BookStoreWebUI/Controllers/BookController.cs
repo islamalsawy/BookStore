@@ -1,4 +1,5 @@
 ﻿using BookStoreDomain.Abstract;
+using BookStoreWebUI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,26 @@ namespace BookStoreWebUI.Controllers
         }
        public ViewResult BookView(int pageno=1)
         {
-            return View(repository.Books
-             .OrderBy(b => b.ISBN)
-             .Skip((pageno - 1) * pageSize)
-             .Take(pageSize)
-             );
+            BookListViewModel model = new BookListViewModel {
+                Books = repository.Books
+               .OrderBy(b => b.ISBN)
+               .Skip((pageno - 1) * pageSize)
+               .Take(pageSize),
+                PagingInfo = new PagingInfo {
+                    CurrentPage = pageno,
+                    ItemsPerPage = pageSize,
+                    TotalItems = repository.Books.Count()
+                }
+
+            };
+
+
+            return View(model);
+            //return View(repository.Books
+            // .OrderBy(b => b.ISBN)
+            // .Skip((pageno - 1) * pageSize)
+            // .Take(pageSize)
+            // );
         }
 
         public ViewResult ListAll()

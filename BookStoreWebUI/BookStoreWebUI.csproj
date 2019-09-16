@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="HTMLHelper\PagingHelper.cs" />
     <Compile Include="Infrastructure\NinjectDependancyResolver.cs" />
+    <Compile Include="Models\BookListViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
