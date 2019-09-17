@@ -1,16 +1,20 @@
 ﻿@using BookStoreDomain.Entities
-@model IEnumerable<Book>
-
+@using BookStoreWebUI.HTMLHelper
+@using BookStoreWebUI.Models
+@model BookListViewModel
 @{
     ViewBag.Title = "List";
 }
 
 <h2>Book List</h2>
-@Model.Count()
-@foreach (var b in Model)
+@*@Model.Count()*@
+@foreach (var b in Model.Books)
 {
     <h3> @b.Title</h3>
     @b.Description
     <h4>@b.Price.ToString("c")</h4>
 }
 
+<div>
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("BookView","Book", new { pageno=x}))
+</div>
