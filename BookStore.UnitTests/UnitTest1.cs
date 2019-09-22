@@ -34,7 +34,7 @@ namespace BookStore.UnitTests
             controller.pageSize = 3;
 
             //Act
-            BookListViewModel result = (BookListViewModel)controller.BookView(1).Model;
+            BookListViewModel result = (BookListViewModel)controller.BookView(null,1).Model;
 
             //Assert
             Book[] bookArray = result.Books.ToArray();
@@ -85,7 +85,7 @@ namespace BookStore.UnitTests
             controller.pageSize = 3;
             // Act
 
-            BookListViewModel result =(BookListViewModel) controller.BookView(2).Model;
+            BookListViewModel result =(BookListViewModel) controller.BookView(null,2).Model;
             // Assert
             PagingInfo pageinfo = result.PagingInfo;
             Assert.AreEqual(pageinfo.CurrentPage, 2);
@@ -95,5 +95,30 @@ namespace BookStore.UnitTests
 
 
         }
+        [TestMethod]
+        public void Can_Filter_Books() {
+            // Arrange
+            Mock<IBookRepository> mock = new Mock<IBookRepository>();
+            mock.Setup(b => b.Books).Returns(new Book[] {
+                new Book{ISBN="1",Title="Book1",Category="CS"},
+                new Book{ISBN="2",Title="Book2",Category="KS"},
+                new Book{ISBN="3",Title="Book3",Category="IS"},
+                new Book{ISBN="4",Title="Book4",Category="MS"},
+                new Book{ISBN="5",Title="Book5",Category="NM"}
+
+            });
+            Bookcontroller controller = new Bookcontroller(mock.Object); // Method we want to test inside this class
+            controller.pageSize = 3;
+
+            //Act
+            Book[] result = ((BookListViewModel)controller
+                .BookView("IS", 1).Model).Books.ToArray();
+            //Assert
+
+            Assert.AreEqual(result.Length, 1);
+            Assert.IsTrue(result[0].Title == "Book3" && result[0].Category == "IS");
+
+        }
+
     }
 }

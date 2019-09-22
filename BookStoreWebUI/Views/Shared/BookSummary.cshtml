@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@model BookStoreDomain.Entities.Book
+<html lang="=en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,23 +8,20 @@
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
 
-
-    <title>@ViewBag.Title</title>
 </head>
 <body>
-
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">Book Store</a>
-    </div>
    
-    <div class="row panel">
-        <div id="category" class="col-xs-3">
-            Wait Here
-        </div>
-        <div class="col-xs-8">
-           
-            @RenderBody()
-        </div>
+    <div class="well large">
+      
+        <h3>
+            <strong>
+                @Model.Title
+            </strong>
+            <span class="pull-right bg-primary">
+                @Model.Price.ToString("c");
+            </span>
+        </h3>
+        <span class="lead">@Model.Description</span>
     </div>
 </body>
 </html>
