@@ -120,5 +120,34 @@ namespace BookStore.UnitTests
 
         }
 
+        [TestMethod]
+        public void Can_Filter_Category()
+        {
+            
+                // Arrange
+                Mock<IBookRepository> mock = new Mock<IBookRepository>();
+                mock.Setup(b => b.Books).Returns(new Book[] {
+                new Book{ISBN="1",Title="Book1",Category="CS"},
+                new Book{ISBN="2",Title="Book2",Category="CS"},
+                new Book{ISBN="3",Title="Book3",Category="IS"},
+                new Book{ISBN="4",Title="Book4",Category="KS"},
+                new Book{ISBN="5",Title="Book5",Category="NM"}
+
+            });
+                NavController controller = new NavController(mock.Object); // Method we want to test inside this class
+                
+
+                //Act
+                string[] result = ((IEnumerable<string>)controller
+                    .Menu().Model).ToArray();
+                //Assert
+
+                Assert.AreEqual(result.Length, 4);
+                Assert.IsTrue(result[0]== "CS" && result[1] == "IS");
+
+
+        }
+
+
     }
 }
