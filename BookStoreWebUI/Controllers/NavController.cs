@@ -14,8 +14,9 @@ namespace BookStoreWebUI.Controllers
         {
             repository = repo;
         }
-        public PartialViewResult Menu()
+        public PartialViewResult Menu(string category=null)
         {
+            ViewBag.SelectedCategory = category;
             IEnumerable<string> cat = repository.Books
                 .Select(b => b.Category)
                 .Distinct();
